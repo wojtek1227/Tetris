@@ -2,6 +2,7 @@
 #include "cmsis_os2.h"
 #include "stm32f4xx_hal.h"
 #include "../gyroscope/stm32f429i_discovery_gyroscope.h"
+#include "../threads/gyro_thread.h"
 
 void SystemClock_Config(void) {
   RCC_OscInitTypeDef RCC_OscInitStruct;
@@ -38,6 +39,7 @@ void SystemClock_Config(void) {
 
 void GUIThread(void* params) {
 	float XYZ[3];
+	AngularRates_t x;
 	// Initialize the Graphics Component
 	GUI_Init();
 	// Put some string to display
@@ -46,15 +48,15 @@ void GUIThread(void* params) {
   tick = osKernelGetTickCount(); 
 	while (1) {
 		GUI_Clear();
-		BSP_GYRO_GetXYZ(XYZ);
+		BSP_GYRO_GetXYZ(x.XYZ);
 		GUI_DispString("x: ");
-		GUI_DispFloat(XYZ[0], 10);
+		GUI_DispFloat(x.Axes.x, 10);
 		GUI_DispString("\n");
 		GUI_DispString("y: ");
-		GUI_DispFloat(XYZ[1], 10);
+		GUI_DispFloat(x.Axes.y, 10);
 		GUI_DispString("\n");
 		GUI_DispString("z: ");
-		GUI_DispFloat(XYZ[2], 10);
+		GUI_DispFloat(x.Axes.z, 10);
 		GUI_DispString("\n");
 		// Execute all GUI jobs ... Return 0 if nothing was done
 		GUI_Exec();
