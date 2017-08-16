@@ -1,0 +1,1 @@
+#include "../gyroscope/stm32f429i_discovery_gyroscope.h"
