@@ -4,7 +4,7 @@
  *      *** Do not modify ! ***
  *
  * Project: 'Tetris' 
- * Target:  'Target 1' 
+ * Target:  'default' 
  */
 
 #ifndef RTE_COMPONENTS_H

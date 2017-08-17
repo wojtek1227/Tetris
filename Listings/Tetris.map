@@ -22,14 +22,6 @@ Section Cross References
     main.o(i.main) refers to rtx_thread.o(i.osThreadNew) for osThreadNew
     main.o(i.main) refers to rtx_kernel.o(i.osKernelStart) for osKernelStart
     main.o(i.main) refers to main.o(i.GUIThread) for GUIThread
-    stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_DisableIT) refers to stm32f429i_discovery_gyroscope.o(.data) for GyroscopeDrv
-    stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_EnableIT) refers to stm32f429i_discovery_gyroscope.o(.data) for GyroscopeDrv
-    stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_GetXYZ) refers to stm32f429i_discovery_gyroscope.o(.data) for GyroscopeDrv
-    stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_ITConfig) refers to stm32f429i_discovery_gyroscope.o(.data) for GyroscopeDrv
-    stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_Init) refers to l3gd20.o(.data) for L3gd20Drv
-    stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_Init) refers to stm32f429i_discovery_gyroscope.o(.data) for GyroscopeDrv
-    stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_ReadID) refers to stm32f429i_discovery_gyroscope.o(.data) for GyroscopeDrv
-    stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_Reset) refers to stm32f429i_discovery_gyroscope.o(.data) for GyroscopeDrv
     l3gd20.o(i.L3GD20_DisableIT) refers to stm32f429i_discovery.o(i.GYRO_IO_Read) for GYRO_IO_Read
     l3gd20.o(i.L3GD20_DisableIT) refers to stm32f429i_discovery.o(i.GYRO_IO_Write) for GYRO_IO_Write
     l3gd20.o(i.L3GD20_EnableIT) refers to stm32f429i_discovery.o(i.GYRO_IO_Read) for GYRO_IO_Read
@@ -148,9 +140,18 @@ Section Cross References
     stm32f429i_discovery.o(i.SPIx_WriteRead) refers to stm32f429i_discovery.o(i.SPIx_Error) for SPIx_Error
     stm32f429i_discovery.o(i.SPIx_WriteRead) refers to stm32f429i_discovery.o(.data) for SpixTimeout
     stm32f429i_discovery.o(i.SPIx_WriteRead) refers to stm32f429i_discovery.o(.bss) for SpiHandle
+    stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_DisableIT) refers to stm32f429i_discovery_gyroscope.o(.data) for GyroscopeDrv
+    stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_EnableIT) refers to stm32f429i_discovery_gyroscope.o(.data) for GyroscopeDrv
+    stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_GetXYZ) refers to stm32f429i_discovery_gyroscope.o(.data) for GyroscopeDrv
+    stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_ITConfig) refers to stm32f429i_discovery_gyroscope.o(.data) for GyroscopeDrv
+    stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_Init) refers to l3gd20.o(.data) for L3gd20Drv
+    stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_Init) refers to stm32f429i_discovery_gyroscope.o(.data) for GyroscopeDrv
+    stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_ReadID) refers to stm32f429i_discovery_gyroscope.o(.data) for GyroscopeDrv
+    stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_Reset) refers to stm32f429i_discovery_gyroscope.o(.data) for GyroscopeDrv
     gyro_thread.o(i.GyroThread) refers to stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_Init) for BSP_GYRO_Init
     gyro_thread.o(i.GyroThread) refers to rtx_kernel.o(i.osKernelGetTickCount) for osKernelGetTickCount
     gyro_thread.o(i.GyroThread) refers to stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_GetXYZ) for BSP_GYRO_GetXYZ
+    gyro_thread.o(i.GyroThread) refers to rtx_delay.o(i.osDelayUntil) for osDelayUntil
     lcd_x.o(i.LCD_CSX) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
     lcd_x.o(i.LCD_ReadM) refers to spi_stm32f4xx.o(.constdata) for Driver_SPI5
     lcd_x.o(i.LCD_WRX) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
@@ -4212,14 +4213,6 @@ Removing Unused input sections from the image.
     Removing main.o(.rev16_text), (4 bytes).
     Removing main.o(.revsh_text), (4 bytes).
     Removing main.o(.rrx_text), (6 bytes).
-    Removing stm32f429i_discovery_gyroscope.o(.rev16_text), (4 bytes).
-    Removing stm32f429i_discovery_gyroscope.o(.revsh_text), (4 bytes).
-    Removing stm32f429i_discovery_gyroscope.o(.rrx_text), (6 bytes).
-    Removing stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_DisableIT), (28 bytes).
-    Removing stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_EnableIT), (28 bytes).
-    Removing stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_ITConfig), (44 bytes).
-    Removing stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_ReadID), (32 bytes).
-    Removing stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_Reset), (24 bytes).
     Removing l3gd20.o(i.L3GD20_GetDataStatus), (18 bytes).
     Removing stm32f429i_discovery.o(.rev16_text), (4 bytes).
     Removing stm32f429i_discovery.o(.revsh_text), (4 bytes).
@@ -4253,10 +4246,18 @@ Removing Unused input sections from the image.
     Removing stm32f429i_discovery.o(i.SPIx_Read), (40 bytes).
     Removing stm32f429i_discovery.o(i.SPIx_Write), (36 bytes).
     Removing stm32f429i_discovery.o(.constdata), (7 bytes).
+    Removing stm32f429i_discovery_gyroscope.o(.rev16_text), (4 bytes).
+    Removing stm32f429i_discovery_gyroscope.o(.revsh_text), (4 bytes).
+    Removing stm32f429i_discovery_gyroscope.o(.rrx_text), (6 bytes).
+    Removing stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_DisableIT), (28 bytes).
+    Removing stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_EnableIT), (28 bytes).
+    Removing stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_ITConfig), (44 bytes).
+    Removing stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_ReadID), (32 bytes).
+    Removing stm32f429i_discovery_gyroscope.o(i.BSP_GYRO_Reset), (24 bytes).
     Removing gyro_thread.o(.rev16_text), (4 bytes).
     Removing gyro_thread.o(.revsh_text), (4 bytes).
     Removing gyro_thread.o(.rrx_text), (6 bytes).
-    Removing gyro_thread.o(i.GyroThread), (22 bytes).
+    Removing gyro_thread.o(i.GyroThread), (34 bytes).
     Removing lcd_x.o(.rev16_text), (4 bytes).
     Removing lcd_x.o(.revsh_text), (4 bytes).
     Removing lcd_x.o(.rrx_text), (6 bytes).
@@ -5256,7 +5257,7 @@ Removing Unused input sections from the image.
     Removing wm_move.o(.ARM.RL_ARM5), (82 bytes).
     Removing wm_move.o(.ARM.RL_ARM6), (77 bytes).
 
-1046 unused section(s) (total 75879 bytes) removed from the image.
+1046 unused section(s) (total 75891 bytes) removed from the image.
 
 ==============================================================================
 
@@ -5539,152 +5540,147 @@ Image Symbol Table
     GUI\WM\WM__SendMessageIfEnabled.c        0x00000000   Number         0  wm__sendmessageifenabled.o ABSOLUTE
     GUI\WM\WM__SendMessageNoPara.c           0x00000000   Number         0  wm__sendmessagenopara.o ABSOLUTE
     GUI\WM\WM__UpdateChildPositions.c        0x00000000   Number         0  wm__updatechildpositions.o ABSOLUTE
-    Gyroscope\\stm32f429i_discovery.c        0x00000000   Number         0  stm32f429i_discovery.o ABSOLUTE
-    Gyroscope\\stm32f429i_discovery_gyroscope.c 0x00000000   Number         0  stm32f429i_discovery_gyroscope.o ABSOLUTE
-    Gyroscope\l3gd20.c                       0x00000000   Number         0  l3gd20.o ABSOLUTE
-    Gyroscope\stm32f429i_discovery.c         0x00000000   Number         0  stm32f429i_discovery.o ABSOLUTE
-    Gyroscope\stm32f429i_discovery_gyroscope.c 0x00000000   Number         0  stm32f429i_discovery_gyroscope.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  wm_getparent.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  wm_getorg.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  wm__sendmessagenopara.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_dispstring.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  wm__sendmessageifenabled.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui__memset16.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_exec.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_alloc_alloczero.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  wm__isancestor.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui__managecache.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_adddecmin.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guicc_m4444i.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_getdrawmode.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_device.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  wm__getprevsibling.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui__intersectrects.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_dispstring.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guidev_write.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui__intersectrect.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui__memset16.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guidev_usagebm.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  wm_getdesktopwindow.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_exec.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guidev_setorg.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_multibuf.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui__managecache.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  lcd_getex.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  wm.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_getdrawmode.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guidev_reduceysize.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_selectlayer.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui__intersectrects.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guidev_getysize.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_time.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui__intersectrect.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guidev_getxsize.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guicc_m8888i.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  lcd_readrect.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  lcd_mirror.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  wm_getdesktopwindow.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_multibuf.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guidev_getpos.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_valf.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  wm.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guidev_getdataptr.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  lcd_getnumdisplays.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_selectlayer.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guidev_createfixed.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  guicc_m888_index2color.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_time.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guidev_clear.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  guicc_m8888i_index2color.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  lcd_readrect.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guidev_32.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  guicc_8888_index2color.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  guicc_888_index2color.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  guicc_0.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  lcd_mirror.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_valf.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  lcd_getnumdisplays.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guicc_8888.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_val.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  guicc_m888_index2color.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_timer.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  guicc_m565.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  guicc_m8888i_index2color.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_settextmode.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_uc_encodenone.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  guicc_8888_index2color.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_settextalign.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_uc.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  guicc_888_index2color.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  lcd_set.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui__alpha.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_task.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_setorg.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  guicc_0.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_val.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_setlinestyle.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_selectlcd.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  guicc_m565.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_setfont.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_goto.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_uc_encodenone.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_setdrawmode.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  guicc_m888.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_uc.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_setalpha.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_charm.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_task.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_pid.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_charline.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_setorg.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_pen.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_char.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_selectlcd.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_getorg.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_adddecshift.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_goto.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_curs1.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui__memset.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  guicc_m888.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui__compactpixelindices.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui__expandpixelindices.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_charm.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  wm_touch.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui__divtbl_63_255.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_charline.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  wm_timer.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui__divtbl_31_255.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_char.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  wm_sendtoparent.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui__divtbl_255_63.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_adddecshift.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  wm_sendmessagenopara.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui__divtbl_255_31.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui__memset.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  wm_notifyparent.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui__divtbl_255_15.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui__expandpixelindices.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  wm_getfirstchild.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui__divtbl_15_255.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui__divtbl_63_255.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  wm_getclientrect.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  lcd.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui__divtbl_31_255.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  wm_criticalhandle.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  wm_move.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui__divtbl_255_63.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  wm_bringtobottom.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  lcd_getp.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui__divtbl_255_31.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  wm__sendmessage.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  wm__updatechildpositions.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  lcd_getpixelcolor.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui__divtbl_255_15.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui__divtbl_15_255.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_alloc.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  wm__isenabled.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_getbitmappixelindex.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  lcd.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  wm_move.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guidev_usage.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  guicc_1616i.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  lcd_getp.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guidev_staticdevices.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_cursorpal.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  wm__updatechildpositions.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guidev_banding.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_cursorarrowmpx.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  lcd_getpixelcolor.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guidev.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  guicc_8666.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  wm__isenabled.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  lcd_updatecolorindices.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  wm_resizewindow.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_getbitmappixelindex.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  lcd_setcliprectex.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  wm_getdesktopwindowex.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  wm__getfirstsibling.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  guidev_writetoactivealpha.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  guicc_1616i.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_cursorpal.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_cursorarrowmpx.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  lcd_selectlcd.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  lcd_aa.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  guicc_8666.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_waitevent.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_sprite.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  guicc_88666i.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  wm_resizewindow.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  wm_getdesktopwindowex.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guidrv_lin_16.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_setdefault.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_drawbitmap.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  wm__getfirstsibling.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_setcolor.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  lcd_color.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  guidev_writetoactivealpha.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_savecontext.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_cursorarrowm.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  lcd_aa.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_rectsintersect.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  guidev_16.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_sprite.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_onkey.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  guicc_88666i.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_drawbitmap.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  lcd_color.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  gui_cursorarrowm.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  guidev_16.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  wm_setsize.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  f6x8.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  wm_setcapture.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  wm_screen2win.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  wm_pid__getprevstate.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  wm_onkey.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  guicc_m1555i.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  f6x8.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  wm_iswindow.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  wm_getwindowrect.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_moverect.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_alloc_alloczero.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  wm_pid__getprevstate.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_mergerect.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  wm_getparent.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  wm_onkey.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guicc_16.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_core.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_adddecmin.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  wm_getorg.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  guicc_m1555i.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  wm_iswindow.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_dispstringat.o ABSOLUTE
-    RL_ARM.s                                 0x00000000   Number         0  gui_device.o ABSOLUTE
+    RL_ARM.s                                 0x00000000   Number         0  wm_getwindowrect.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  gui_calccolordist.o ABSOLUTE
     RL_ARM.s                                 0x00000000   Number         0  guidev_writetoactiveopaque.o ABSOLUTE
     RTE\CMSIS\RTX_Config.c                   0x00000000   Number         0  rtx_config.o ABSOLUTE
@@ -5696,6 +5692,11 @@ Image Symbol Table
     RTE\\Device\\STM32F429ZITx\\system_stm32f4xx.c 0x00000000   Number         0  system_stm32f4xx.o ABSOLUTE
     RTE\\Graphics_Display\\STM32F429ZITx\\LCDConf.c 0x00000000   Number         0  lcdconf.o ABSOLUTE
     dc.s                                     0x00000000   Number         0  dc.o ABSOLUTE
+    gyroscope\\stm32f429i_discovery.c        0x00000000   Number         0  stm32f429i_discovery.o ABSOLUTE
+    gyroscope\\stm32f429i_discovery_gyroscope.c 0x00000000   Number         0  stm32f429i_discovery_gyroscope.o ABSOLUTE
+    gyroscope\l3gd20.c                       0x00000000   Number         0  l3gd20.o ABSOLUTE
+    gyroscope\stm32f429i_discovery.c         0x00000000   Number         0  stm32f429i_discovery.o ABSOLUTE
+    gyroscope\stm32f429i_discovery_gyroscope.c 0x00000000   Number         0  stm32f429i_discovery_gyroscope.o ABSOLUTE
     src\\main.c                              0x00000000   Number         0  main.o ABSOLUTE
     src\main.c                               0x00000000   Number         0  main.o ABSOLUTE
     threads\\gyro_thread.c                   0x00000000   Number         0  gyro_thread.o ABSOLUTE
@@ -6938,10 +6939,10 @@ Image Symbol Table
     os_timer_thread_stack                    0x20002420   Data         200  rtx_lib.o(.bss.os.thread.stack)
     .bss.os.timer.cb                         0x200024e8   Section       32  gui_x_rte.o(.bss.os.timer.cb)
     os_timer_cb_GUI_Timer                    0x200024e8   Data          32  gui_x_rte.o(.bss.os.timer.cb)
-    .data                                    0x20002508   Section        4  stm32f429i_discovery_gyroscope.o(.data)
-    GyroscopeDrv                             0x20002508   Data           4  stm32f429i_discovery_gyroscope.o(.data)
-    .data                                    0x2000250c   Section       44  l3gd20.o(.data)
-    .data                                    0x20002538   Section       20  stm32f429i_discovery.o(.data)
+    .data                                    0x20002508   Section       44  l3gd20.o(.data)
+    .data                                    0x20002534   Section       20  stm32f429i_discovery.o(.data)
+    .data                                    0x20002548   Section        4  stm32f429i_discovery_gyroscope.o(.data)
+    GyroscopeDrv                             0x20002548   Data           4  stm32f429i_discovery_gyroscope.o(.data)
     .data                                    0x2000254c   Section        5  rtx_lib.o(.data)
     os_kernel_active                         0x20002550   Data           1  rtx_lib.o(.data)
     .data                                    0x20002551   Section        1  os_systick.o(.data)
@@ -7884,11 +7885,11 @@ Image Symbol Table
     osRtxConfig                              0x080117a0   Data         104  rtx_lib.o(.rodata)
     Region$$Table$$Base                      0x08011808   Number         0  anon$$obj.o(Region$$Table)
     Region$$Table$$Limit                     0x08011828   Number         0  anon$$obj.o(Region$$Table)
-    L3gd20Drv                                0x2000250c   Data          44  l3gd20.o(.data)
-    GPIO_PORT                                0x20002538   Data           8  stm32f429i_discovery.o(.data)
-    BUTTON_PORT                              0x20002540   Data           4  stm32f429i_discovery.o(.data)
-    I2cxTimeout                              0x20002544   Data           4  stm32f429i_discovery.o(.data)
-    SpixTimeout                              0x20002548   Data           4  stm32f429i_discovery.o(.data)
+    L3gd20Drv                                0x20002508   Data          44  l3gd20.o(.data)
+    GPIO_PORT                                0x20002534   Data           8  stm32f429i_discovery.o(.data)
+    BUTTON_PORT                              0x2000253c   Data           4  stm32f429i_discovery.o(.data)
+    I2cxTimeout                              0x20002540   Data           4  stm32f429i_discovery.o(.data)
+    SpixTimeout                              0x20002544   Data           4  stm32f429i_discovery.o(.data)
     irqRtxLibRef                             0x2000254c   Data           4  rtx_lib.o(.data)
     uwTick                                   0x20002554   Data           4  stm32f4xx_hal.o(.data)
     SystemCoreClock                          0x20002558   Data           4  system_stm32f4xx.o(.data)
@@ -8029,8 +8030,8 @@ Memory Map of the image
     0x08000be0   0x00000002   Code   RO         9025    .text               c_w.l(use_no_semi.o)
     0x08000be2   0x00000000   Code   RO         9027    .text               c_w.l(indicate_semi.o)
     0x08000be2   0x00000002   PAD
-    0x08000be4   0x0000001c   Code   RO          193    i.BSP_GYRO_GetXYZ   stm32f429i_discovery_gyroscope.o
-    0x08000c00   0x000000b4   Code   RO          195    i.BSP_GYRO_Init     stm32f429i_discovery_gyroscope.o
+    0x08000be4   0x0000001c   Code   RO          497    i.BSP_GYRO_GetXYZ   stm32f429i_discovery_gyroscope.o
+    0x08000c00   0x000000b4   Code   RO          499    i.BSP_GYRO_Init     stm32f429i_discovery_gyroscope.o
     0x08000cb4   0x00000010   Code   RO         6151    i.DMA2D_IRQHandler  lcdconf.o
     0x08000cc4   0x000001d8   Code   RO         3780    i.Enable_GPIO_Clock  spi_stm32f4xx.o
     0x08000e9c   0x00000002   Code   RO         1095    i.EvrRtxEventFlagsWaitTimeout  rtx_evr.o
@@ -8262,9 +8263,9 @@ Memory Map of the image
     0x080035bc   0x00000010   Code   RO         6661    i.GUI__RegisterExit  GUI_CM4F_L.lib(gui_core.o)
     0x080035cc   0x0000004c   Code   RO         7241    i.GUI__memset       GUI_CM4F_L.lib(gui__memset.o)
     0x08003618   0x0000003c   Code   RO         7709    i.GUI__memset16     GUI_CM4F_L.lib(gui__memset16.o)
-    0x08003654   0x00000094   Code   RO          351    i.GYRO_IO_Init      stm32f429i_discovery.o
-    0x080036e8   0x0000004c   Code   RO          352    i.GYRO_IO_Read      stm32f429i_discovery.o
-    0x08003734   0x00000044   Code   RO          353    i.GYRO_IO_Write     stm32f429i_discovery.o
+    0x08003654   0x00000094   Code   RO          272    i.GYRO_IO_Init      stm32f429i_discovery.o
+    0x080036e8   0x0000004c   Code   RO          273    i.GYRO_IO_Read      stm32f429i_discovery.o
+    0x08003734   0x00000044   Code   RO          274    i.GYRO_IO_Write     stm32f429i_discovery.o
     0x08003778   0x000000aa   Code   RO         4228    i.HAL_DMA_Abort     stm32f4xx_hal_dma.o
     0x08003822   0x00000002   PAD
     0x08003824   0x00000180   Code   RO         4569    i.HAL_GPIO_DeInit   stm32f4xx_hal_gpio.o
@@ -8309,15 +8310,15 @@ Memory Map of the image
     0x08004f98   0x00000002   Code   RO         5235    i.HAL_SPI_MspInit   stm32f4xx_hal_spi.o
     0x08004f9a   0x000002cc   Code   RO         5242    i.HAL_SPI_TransmitReceive  stm32f4xx_hal_spi.o
     0x08005266   0x00000034   Code   RO         4111    i.HAL_SYSTICK_Config  stm32f4xx_hal_cortex.o
-    0x0800529a   0x00000042   Code   RO          270    i.L3GD20_DisableIT  l3gd20.o
-    0x080052dc   0x0000004a   Code   RO          271    i.L3GD20_EnableIT   l3gd20.o
-    0x08005326   0x0000002c   Code   RO          272    i.L3GD20_FilterCmd  l3gd20.o
-    0x08005352   0x0000002c   Code   RO          273    i.L3GD20_FilterConfig  l3gd20.o
-    0x0800537e   0x0000005e   Code   RO          275    i.L3GD20_INT1InterruptConfig  l3gd20.o
-    0x080053dc   0x0000002a   Code   RO          276    i.L3GD20_Init       l3gd20.o
-    0x08005406   0x00000016   Code   RO          277    i.L3GD20_ReadID     l3gd20.o
-    0x0800541c   0x000000f8   Code   RO          278    i.L3GD20_ReadXYZAngRate  l3gd20.o
-    0x08005514   0x00000022   Code   RO          279    i.L3GD20_RebootCmd  l3gd20.o
+    0x0800529a   0x00000042   Code   RO          188    i.L3GD20_DisableIT  l3gd20.o
+    0x080052dc   0x0000004a   Code   RO          189    i.L3GD20_EnableIT   l3gd20.o
+    0x08005326   0x0000002c   Code   RO          190    i.L3GD20_FilterCmd  l3gd20.o
+    0x08005352   0x0000002c   Code   RO          191    i.L3GD20_FilterConfig  l3gd20.o
+    0x0800537e   0x0000005e   Code   RO          193    i.L3GD20_INT1InterruptConfig  l3gd20.o
+    0x080053dc   0x0000002a   Code   RO          194    i.L3GD20_Init       l3gd20.o
+    0x08005406   0x00000016   Code   RO          195    i.L3GD20_ReadID     l3gd20.o
+    0x0800541c   0x000000f8   Code   RO          196    i.L3GD20_ReadXYZAngRate  l3gd20.o
+    0x08005514   0x00000022   Code   RO          197    i.L3GD20_RebootCmd  l3gd20.o
     0x08005536   0x00000002   PAD
     0x08005538   0x00000010   Code   RO         8752    i.LCD_AA_SetAndMask  GUI_CM4F_L.lib(lcd_aa.o)
     0x08005548   0x0000001c   Code   RO          616    i.LCD_CSX           lcd_x.o
@@ -8428,10 +8429,10 @@ Memory Map of the image
     0x080077fc   0x00000054   Code   RO         3803    i.SPI_Uninitialize  spi_stm32f4xx.o
     0x08007850   0x000000aa   Code   RO         5275    i.SPI_WaitFlagStateUntilTimeout  stm32f4xx_hal_spi.o
     0x080078fa   0x00000002   PAD
-    0x080078fc   0x00000014   Code   RO          374    i.SPIx_Error        stm32f429i_discovery.o
-    0x08007910   0x00000054   Code   RO          375    i.SPIx_Init         stm32f429i_discovery.o
-    0x08007964   0x00000074   Code   RO          376    i.SPIx_MspInit      stm32f429i_discovery.o
-    0x080079d8   0x00000030   Code   RO          379    i.SPIx_WriteRead    stm32f429i_discovery.o
+    0x080078fc   0x00000014   Code   RO          295    i.SPIx_Error        stm32f429i_discovery.o
+    0x08007910   0x00000054   Code   RO          296    i.SPIx_Init         stm32f429i_discovery.o
+    0x08007964   0x00000074   Code   RO          297    i.SPIx_MspInit      stm32f429i_discovery.o
+    0x080079d8   0x00000030   Code   RO          300    i.SPIx_WriteRead    stm32f429i_discovery.o
     0x08007a08   0x00000098   Code   RO            5    i.SystemClock_Config  main.o
     0x08007aa0   0x00000068   Code   RO         5532    i.SystemInit        system_stm32f4xx.o
     0x08007b08   0x00000244   Code   RO         5533    i.SystemInit_ExtMemCtl  system_stm32f4xx.o
@@ -8919,9 +8920,9 @@ Memory Map of the image
     0x200022d0   0x00000088   Data   RW         2336    .bss.os.thread.cb   rtx_lib.o
     0x20002358   0x00000190   Data   RW         2337    .bss.os.thread.stack  rtx_lib.o
     0x200024e8   0x00000020   Data   RW         6050    .bss.os.timer.cb    gui_x_rte.o
-    0x20002508   0x00000004   Data   RW          198    .data               stm32f429i_discovery_gyroscope.o
-    0x2000250c   0x0000002c   Data   RW          280    .data               l3gd20.o
-    0x20002538   0x00000014   Data   RW          382    .data               stm32f429i_discovery.o
+    0x20002508   0x0000002c   Data   RW          198    .data               l3gd20.o
+    0x20002534   0x00000014   Data   RW          303    .data               stm32f429i_discovery.o
+    0x20002548   0x00000004   Data   RW          502    .data               stm32f429i_discovery_gyroscope.o
     0x2000254c   0x00000005   Data   RW         2339    .data               rtx_lib.o
     0x20002551   0x00000001   Data   RW         3681    .data               os_systick.o
     0x20002552   0x00000002   PAD
@@ -8966,7 +8967,7 @@ Memory Map of the image
     0x20002738   0x00000014   Data   RW         8316    .data               GUI_CM4F_L.lib(gui_timer.o)
     0x2000274c   0x00000004   Data   RW         8758    .data               GUI_CM4F_L.lib(lcd_aa.o)
     0x20002750   0x000000a4   Data   RW         2131    .data.os            rtx_kernel.o
-    0x200027f4   0x000000ac   Zero   RW          380    .bss                stm32f429i_discovery.o
+    0x200027f4   0x000000ac   Zero   RW          301    .bss                stm32f429i_discovery.o
     0x200028a0   0x00000028   Zero   RW         3804    .bss                spi_stm32f4xx.o
     0x200028c8   0x00004000   Zero   RW         6136    .bss                guiconf.o
     0x200068c8   0x000031e8   Zero   RW         6200    .bss                lcdconf.o
@@ -9003,7 +9004,7 @@ Image component sizes
         28          8          0          0      16384        523   guiconf.o
          0          0          0          0          0       3644   gyro_thread.o
        184         12          1          0          0        616   irq_cm4f.o
-       668         16          0         44          0       5536   l3gd20.o
+       668         16          0         44          0       6604   l3gd20.o
        572         50          0          0          0       9305   lcd_x.o
       4472        514          8         32     166376      39187   lcdconf.o
        356         46          0          0          0     780092   main.o
@@ -9024,7 +9025,7 @@ Image component sizes
       4054        182        144          0         40      51612   spi_stm32f4xx.o
         64         26        428          0       1536        860   startup_stm32f429xx.o
        560         62          0         20        172       5540   stm32f429i_discovery.o
-       208         12          0          4          0       2918   stm32f429i_discovery_gyroscope.o
+       208         12          0          4          0       1850   stm32f429i_discovery_gyroscope.o
        114         16          0          4          0       4059   stm32f4xx_hal.o
        372         28          0          0          0      35153   stm32f4xx_hal_cortex.o
        170          0          0          0          0       1436   stm32f4xx_hal_dma.o
