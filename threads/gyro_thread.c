@@ -2,13 +2,16 @@
 
 void GyroThread(void* params)
 {
-	BSP_GYRO_Init();
+	
 	AngularRates_t* GyroReading = (AngularRates_t*)params;
 	uint32_t tick = osKernelGetTickCount();
+	
+	BSP_GYRO_Init();
+	
 	while(1)
 	{
 		BSP_GYRO_GetXYZ(GyroReading->XYZ);
-		tick += 500;
+		tick += 1000;
 		osDelayUntil(tick);
 	}
 }

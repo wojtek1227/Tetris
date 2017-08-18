@@ -439,7 +439,15 @@
               <FileType>5</FileType>
               <FilePath>.\threads\gyro_thread.h</FilePath>
             </File>
+            <File>
+              <FileName>stm32f429i_discovery.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\threads\stm32f429i_discovery.h</FilePath>
+            </File>
           </Files>
+        </Group>
+        <Group>
+          <GroupName>tetris</GroupName>
         </Group>
         <Group>
           <GroupName>::Board Support</GroupName>

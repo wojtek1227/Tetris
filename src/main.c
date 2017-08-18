@@ -3,6 +3,8 @@
 #include "stm32f4xx_hal.h"
 #include "../gyroscope/stm32f429i_discovery_gyroscope.h"
 #include "../threads/gyro_thread.h"
+#include "../threads/game_thread.h"
+#include "../threads/button_thread.h"
 
 void SystemClock_Config(void) {
   RCC_OscInitTypeDef RCC_OscInitStruct;
@@ -36,50 +38,22 @@ void SystemClock_Config(void) {
   HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5);
 }
 
-
-void GUIThread(void* params) {
-	float XYZ[3];
-	AngularRates_t x;
-	// Initialize the Graphics Component
-	GUI_Init();
-	// Put some string to display
-	GUI_DispString("Hello World!");
-	uint64_t tick;
-  tick = osKernelGetTickCount(); 
-	while (1) {
-		GUI_Clear();
-		BSP_GYRO_GetXYZ(x.XYZ);
-		GUI_DispString("x: ");
-		GUI_DispFloat(x.Axes.x, 10);
-		GUI_DispString("\n");
-		GUI_DispString("y: ");
-		GUI_DispFloat(x.Axes.y, 10);
-		GUI_DispString("\n");
-		GUI_DispString("z: ");
-		GUI_DispFloat(x.Axes.z, 10);
-		GUI_DispString("\n");
-		// Execute all GUI jobs ... Return 0 if nothing was done
-		GUI_Exec();
-		// Nothing left to do for the moment ... Idle processing
-		GUI_X_ExecIdle();
-		tick += 400;                           // delay 1000 ticks periodically
-    osDelayUntil(tick);
-	}
-}
-
 int main(void)
 {
+	AngularRates_t read;
 	// Initialize the RTOS Kernel.
-    osKernelInitialize();
-    // Initialize STM32Cube HAL library
-    HAL_Init();
-    // Initialize PLL
-    SystemClock_Config();
-		BSP_GYRO_Init();
-    // Create and run the GUI thread
-    osThreadNew(GUIThread, NULL, NULL);
-    // Start the OS
-    osKernelStart();
- 
-    return 0;
+	osKernelInitialize();
+	// Initialize STM32Cube HAL library
+	HAL_Init();
+	// Initialize PLL
+	SystemClock_Config();
+	
+	// Create and run the GUI thread
+	osThreadNew(GameThread, &read, NULL);
+	osThreadNew(GyroThread, &read, NULL);
+	osThreadNew(ButtonThread, NULL, NULL);
+	// Start the OS
+	osKernelStart();
+
+	return 0;
 }
