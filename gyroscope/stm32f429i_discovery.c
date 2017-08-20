@@ -187,23 +187,23 @@ uint32_t BSP_GetVersion(void)
   *     @arg LED4
   * @retval None
   */
-void BSP_LED_Init(Led_TypeDef Led)
-{
-  GPIO_InitTypeDef  GPIO_InitStruct;
-  
-  /* Enable the GPIO_LED Clock */
-  LEDx_GPIO_CLK_ENABLE(Led);
+//void BSP_LED_Init(Led_TypeDef Led)
+//{
+//  GPIO_InitTypeDef  GPIO_InitStruct;
+//  
+//  /* Enable the GPIO_LED Clock */
+//  LEDx_GPIO_CLK_ENABLE(Led);
 
-  /* Configure the GPIO_LED pin */
-  GPIO_InitStruct.Pin = GPIO_PIN[Led];
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FAST;
-  
-  HAL_GPIO_Init(GPIO_PORT[Led], &GPIO_InitStruct);
-  
-  HAL_GPIO_WritePin(GPIO_PORT[Led], GPIO_PIN[Led], GPIO_PIN_RESET); 
-}
+//  /* Configure the GPIO_LED pin */
+//  GPIO_InitStruct.Pin = GPIO_PIN[Led];
+//  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//  GPIO_InitStruct.Pull = GPIO_PULLUP;
+//  GPIO_InitStruct.Speed = GPIO_SPEED_FAST;
+//  
+//  HAL_GPIO_Init(GPIO_PORT[Led], &GPIO_InitStruct);
+//  
+//  HAL_GPIO_WritePin(GPIO_PORT[Led], GPIO_PIN[Led], GPIO_PIN_RESET); 
+//}
 
 /**
   * @brief  Turns selected LED On.
@@ -260,7 +260,7 @@ void BSP_PB_Init(Button_TypeDef Button, ButtonMode_TypeDef ButtonMode)
   GPIO_InitTypeDef GPIO_InitStruct;
 
   /* Enable the BUTTON Clock */
-  BUTTONx_GPIO_CLK_ENABLE(Button);
+  //BUTTONx_GPIO_CLK_ENABLE(Button);
   __SYSCFG_CLK_ENABLE();
 
   if (ButtonMode == BUTTON_MODE_GPIO)

@@ -31,6 +31,7 @@
 #define RTE_DEVICE_HAL_LTDC
 #define RTE_DEVICE_HAL_PWR
 #define RTE_DEVICE_HAL_RCC
+#define RTE_DEVICE_HAL_RNG
 #define RTE_DEVICE_HAL_SPI
 #define RTE_DEVICE_STARTUP_STM32F4XX    /* Device Startup for STM32F4 */
 #define RTE_Drivers_SPI1                /* Driver SPI1 */

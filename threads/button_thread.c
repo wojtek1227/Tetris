@@ -7,8 +7,8 @@ void ButtonThread(void* params)
 	uint8_t curr_state, last_state;
 	GPIO_InitTypeDef  GPIO_InitStruct;
 	//init
-	BSP_PB_Init(BUTTON_KEY, BUTTON_MODE_GPIO);\
-	
+	BSP_PB_Init(BUTTON_KEY, BUTTON_MODE_GPIO);
+	__GPIOA_CLK_ENABLE();
 	//Led init for tests
 	__GPIOG_CLK_ENABLE();
 
