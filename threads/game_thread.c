@@ -15,7 +15,7 @@ void GameThread(void* params)
 	while(1)
 	{
 //		GUI_Clear();
-		GUI_SetBkColor(GUI_ORANGE);
+		GUI_SetBkColor(GUI_BLUE);
 //		GUI_SetColor(GUI_RED);
 //		GUI_DispString("x: ");
 //		GUI_DispFloat(Gyro->x, 10);

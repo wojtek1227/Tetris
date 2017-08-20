@@ -52,10 +52,21 @@ static const uint16_t block_type[NUMBER_OF_BLOCKS][NUMBER_OF_POSITIONS] =
 
 
 //Global variables
-/*static*/ uint8_t field[FIELD_X_SIZE][FIELD_Y_SIZE];
+static uint32_t field[FIELD_Y_SIZE][FIELD_X_SIZE] = {{0}};
 Block_t current_block;
 
 //Private functions
+
+static void FieldInit(void)
+{
+	for(uint8_t y = 0; y < FIELD_Y_SIZE; y++)
+	{
+		for(uint8_t x = 0; x < FIELD_X_SIZE; x++)
+		{
+			field[y][x] = 0;
+		}
+	}
+}
 /*static*/ void DrawSquare(uint16_t x, uint16_t y, uint32_t color_index)
 {
 	if ((x < FIELD_X_SIZE) && (y < FIELD_Y_SIZE))
@@ -111,13 +122,13 @@ static uint8_t CollisionDetection(Block_t block)
 
 /*static*/ uint8_t CreateBlock(Block_t* block)
 {
-	uint32_t random = 3;
+	uint32_t random = 9;
 	//popiac hala
-	block->x = 5;
+	block->x = 4;
 	block->y = 0;
 	block->type = random % 7 + 1;
 	block->position = random % 4;
-	block->color_num = random % 7;
+	block->color_num = random % 7 + 1;
 	//Collision detection
 	if (CollisionDetection(*block))
 	{
@@ -159,6 +170,7 @@ void TetrisButton(void);
 void TetrisGame(void)
 {
 	Block_t block;
+	FieldInit();
 	CreateBlock(&block);
 	AddBlock(&block);
 	UpdateScreen();
