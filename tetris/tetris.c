@@ -51,11 +51,25 @@ static const uint32_t colors[COLOR_NUMBER] =
  * T type block
  * reversed S type block
  */
+
+/*
+ * Blocks are coded using 16bits
+ * exmaple
+ * 0000
+ * 1111
+ * 0000
+ * 0000, gives us 0x0f00 
+ *
+ * 0010
+ * 0010
+ * 0010
+ * 0010, gives us 0x4444
+ */
 static const uint16_t block_type[NUMBER_OF_BLOCKS][NUMBER_OF_POSITIONS] = 
 {
 	{0, 0, 0, 0}, // No block
 	{0x0F00, 0x4444, 0x00F0, 0x2222},// I
-	{0x2260, 0x0470, 0x0644, 0x0E20},// reversedL
+	{0x2260, 0x0470, 0x0644, 0x0E20},// reversed L
 	{0x4460, 0x0740, 0x0622, 0x02E0},// L
 	{0x0660, 0x0660, 0x0660, 0x0660},// square
 	{0x06C0, 0x0462, 0x06C0, 0x0462},// S
@@ -67,6 +81,8 @@ static const uint16_t block_type[NUMBER_OF_BLOCKS][NUMBER_OF_POSITIONS] =
 //Global variables
 static uint32_t field[FIELD_Y_SIZE][FIELD_X_SIZE] = {{0}};
 Block_t current_block;
+int16_t y_pos;
+float y;
 
 //Private functions
 
@@ -135,8 +151,20 @@ static void UpdateScreen(void)
 	}
 }
 
-static uint8_t CollisionDetection(Block_t block)
+static uint8_t CollisionDetection(const Block_t* block)
 {
+	uint16_t tmp = 0x8000;
+	for(uint8_t i = 0; i < 4; i++)
+	{
+		for(uint8_t j = 0; j < 4; j++)
+		{
+			if ((block_type[block->type][block->position] & tmp) && (field[block->y + i][block->x + i] != 0))
+			{
+				return 1;
+			}
+			tmp >>= 1;
+		}
+	}
 	return 0;
 }
 
@@ -150,7 +178,7 @@ static uint8_t BlockCreate(Block_t* block)
 	block->position = random % 4;
 	block->color_num = 6;
 	//Collision detection
-	if (CollisionDetection(*block))
+	if (CollisionDetection(block))
 	{
 		return 1;
 	}
@@ -195,6 +223,22 @@ static void BlockDelete(Block_t *block)
 	}
 }
 
+static uint8_t BlockCollision(const Block_t* block)
+{
+	uint16_t tmp = 0x8000;
+	
+	for(uint8_t i = 0; i < 4; i++)
+	{
+		for(uint8_t j = 0; j < 4; j++)
+		{
+			if ((block_type[block->type][block->position] & tmp) && (field[block->y + i][block->x + j] != 0))
+			{
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
 //Public functions
 void TetrisInit(void)
 {
@@ -208,7 +252,26 @@ void TetrisInit(void)
 }
 
 //Use gyro data
-void TetrisGyro(float y_axis_data);
+void TetrisGyro(float y_axis_data)
+{
+	//static float y_pos;
+	//y_pos += y_axis_data/114.285F;
+	if ((y_axis_data/100.0F) > 150.0F)
+	{
+		y = y_axis_data;
+		y_pos += 1;
+	}
+	if ((y_axis_data/100.0F) < (-150.0F))
+	{	
+		y = y_axis_data;
+		y_pos -= 1;
+	}
+//	GUI_GotoXY(0, 300);
+//	GUI_DispString("Y_pos: ");
+//	GUI_DispFloat(y_pos, 10);
+	//UpdateScreen();
+	
+}
 
 //Rotate if button was pressed
 void TetrisButton(void);
@@ -217,8 +280,13 @@ void TetrisButton(void);
 void TetrisGame(void)
 {
 	Block_t block;
-	BlockCreate(&block);
-	BlockAdd(&block);
+	BlockCreate(&current_block);
+	BlockAdd(&current_block);
+	GUI_GotoXY(0,300);
+	GUI_DispString("Ypos: ");
+	GUI_DispFloat(y_pos, 10);
+	GUI_DispString("\nYaxis: ");
+	GUI_DispFloat(y, 10);
 	UpdateScreen();
 
 }
