@@ -13,7 +13,7 @@ void GyroThread(void* params)
 	{
 		BSP_GYRO_GetXYZ(GyroReading.XYZ);
 		TetrisGyro(GyroReading.y);
-		tick += 1000;
+		tick += 100;
 		osDelayUntil(tick);
 	}
 }

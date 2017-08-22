@@ -1,5 +1,6 @@
 #include "tetris.h"
 #include "GUI.h"
+#include "cmsis_os2.h"
 
 
 #define BACKGROUND_COLOR GUI_BLUE
@@ -244,34 +245,60 @@ void TetrisInit(void)
 {
 	GUI_Init();
 	FieldInit();
+	BlockCreate(&current_block);
 	//field[10][10] = GUI_MAGENTA;
+	BlockAdd(&current_block);
 	GUI_SetBkColor(BACKGROUND_COLOR);
 	UpdateScreen();
 	
 	GUI_Exec();
 }
 
+static void BlockMove()
+{
+	if (y_pos > 5)
+	{
+		BlockDelete(&current_block);
+		current_block.x++;
+		BlockAdd(&current_block);
+		y_pos = 0;
+	}
+	else if(y_pos < -5)
+	{
+		BlockDelete(&current_block);
+		current_block.x--;
+		BlockAdd(&current_block);		
+		y_pos = 0;
+	}
+}
+
+
 //Use gyro data
 void TetrisGyro(float y_axis_data)
 {
 	//static float y_pos;
 	//y_pos += y_axis_data/114.285F;
-	if ((y_axis_data/100.0F) > 150.0F)
+	if ((y_axis_data/100.0F) > 100.0F)
 	{
 		y = y_axis_data;
 		y_pos += 1;
 	}
-	if ((y_axis_data/100.0F) < (-150.0F))
+	if ((y_axis_data/100.0F) - 7 < (-100.0F))
 	{	
 		y = y_axis_data;
 		y_pos -= 1;
 	}
+	if (y_pos > 10 || y_pos < -10)
+	{
+		y_pos = 0;
+	}
+	BlockMove();
 //	GUI_GotoXY(0, 300);
 //	GUI_DispString("Y_pos: ");
 //	GUI_DispFloat(y_pos, 10);
-	//UpdateScreen();
-	
+	//UpdateScreen();	
 }
+
 
 //Rotate if button was pressed
 void TetrisButton(void);
@@ -280,13 +307,10 @@ void TetrisButton(void);
 void TetrisGame(void)
 {
 	Block_t block;
-	BlockCreate(&current_block);
-	BlockAdd(&current_block);
 	GUI_GotoXY(0,300);
 	GUI_DispString("Ypos: ");
 	GUI_DispFloat(y_pos, 10);
 	GUI_DispString("\nYaxis: ");
 	GUI_DispFloat(y, 10);
 	UpdateScreen();
-
 }

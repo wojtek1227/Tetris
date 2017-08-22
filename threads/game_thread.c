@@ -20,7 +20,7 @@ void GameThread(void* params)
 		GUI_Exec();
 		// Nothing left to do for the moment ... Idle processing
 		GUI_X_ExecIdle();
-		tick +=1000;
+		tick +=100;
 		osDelayUntil(tick);
 	}
 }
