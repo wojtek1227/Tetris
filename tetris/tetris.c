@@ -69,13 +69,13 @@ static const uint32_t colors[COLOR_NUMBER] =
 static const uint16_t block_type[NUMBER_OF_BLOCKS][NUMBER_OF_POSITIONS] = 
 {
 	{0, 0, 0, 0}, // No block
-	{0x0F00, 0x4444, 0x00F0, 0x2222},// I
-	{0x2260, 0x0470, 0x0644, 0x0E20},// reversed L
-	{0x4460, 0x0740, 0x0622, 0x02E0},// L
-	{0x0660, 0x0660, 0x0660, 0x0660},// square
-	{0x06C0, 0x0462, 0x06C0, 0x0462},// S
-	{0x0720, 0x0262, 0x04E0, 0x0464},// T
-	{0x0630, 0x0264, 0x0630, 0x0264}// reversed S
+	{0x0F00, 0x8888, 0x00F0, 0x8888},// I
+	{0x44C0, 0x08E0, 0x0C88, 0x0E20},// reversed L
+	{0x88C0, 0x0E80, 0x0C44, 0x02E0},// L
+	{0x0CC0, 0x0CC0, 0x0CC0, 0x0CC0},// square
+	{0x06C0, 0x08C4, 0x06C0, 0x08C4},// S
+	{0x0E40, 0x04C4, 0x04E0, 0x08C8},// T
+	{0x0C60, 0x04C8, 0x0C60, 0x04C8}// reversed S
 };
 
 
@@ -175,9 +175,9 @@ static uint8_t BlockCreate(Block_t* block)
 	//ADD rng hal
 	block->x = 4;
 	block->y = 0;
-	block->type = random % 7 + 1;
-	block->position = random % 4;
-	block->color_num = 6;
+	block->type = 7;
+	block->position = 2;
+	block->color_num = 4;
 	//Collision detection
 	if (CollisionDetection(block))
 	{
@@ -256,19 +256,23 @@ void TetrisInit(void)
 
 static void BlockMove()
 {
-	if (y_pos > 5)
+	if (y_pos > 3)// zakres <-3,3> sprawdza sie calkiem dobrze, ale to tez kwestia wlasnych preferencji 
 	{
+		//TODO dodac sprawdzanie x jak w else if
+		// trzeba uwzglednic ze moga byc 2 rózne górne limity x, bo mamy klocki dlugie na 3 badz na 4
+		// w zwiazku z tym proponuje limit dopasowac do klocków dlugich na 3 i dodatkowo przed dodaniem sprawdzac kolizje, jesli wystepuje to cofnac zmiane x
 		BlockDelete(&current_block);
 		current_block.x++;
 		BlockAdd(&current_block);
-		y_pos = 0;
+		//y_pos = 5; // zerowanie jest slabe bo jak za bardzo przechylimy to mamy zero podczas trzymania plytki pod skosem
 	}
-	else if(y_pos < -5)
+	else if(y_pos < -3)
 	{
 		BlockDelete(&current_block);
-		current_block.x--;
+		current_block.x > 0 ? current_block.x-- : current_block.x;
+		//current_block.x-- ;
 		BlockAdd(&current_block);		
-		y_pos = 0;
+		//y_pos = -5;
 	}
 }
 
