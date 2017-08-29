@@ -360,7 +360,28 @@ void TetrisGyro(float y_axis_data)
 
 
 //Rotate if button was pressed
-void TetrisButton(void);
+void TetrisButton(void)
+{
+	BlockDelete(&current_block);
+	if (current_block.position == NUMBER_OF_POSITIONS-1)
+	{
+		current_block.position = 0;
+		if (BlockCollision(&current_block))
+		{
+			current_block.position = NUMBER_OF_POSITIONS-1;
+		}
+	}
+	else
+	{
+		current_block.position++;
+		if (BlockCollision(&current_block))
+		{
+			current_block.position--;
+		}
+	}
+	BlockAdd(&current_block);
+
+}
 	
 //Game function
 void TetrisGame(void)

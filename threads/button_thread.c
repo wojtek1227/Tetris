@@ -1,4 +1,5 @@
 #include "button_thread.h"
+#include "../tetris/tetris.h"
 
 void ButtonThread(void* params)
 {
@@ -28,6 +29,7 @@ void ButtonThread(void* params)
 		if ((curr_state == 1) && (last_state == 0))
 		{
 			HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_13);
+			TetrisButton();
 		}
 		last_state = curr_state;
 		tick += 20;
