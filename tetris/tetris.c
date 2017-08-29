@@ -5,7 +5,7 @@
 #include "stm32f4xx_hal_rcc.h"
 #include "stm32f429xx.h"
 
-#define BACKGROUND_COLOR GUI_BLUE
+#define BACKGROUND_COLOR GUI_YELLOW
 
 #define NUMBER_OF_BLOCKS 8
 #define NUMBER_OF_POSITIONS 4
@@ -46,7 +46,7 @@ static const uint32_t colors[COLOR_NUMBER] =
 	GUI_CYAN,
 	GUI_GRAY,
 	GUI_ORANGE,
-	GUI_YELLOW,
+	GUI_BLUE,
 	GUI_GREEN,
 	GUI_MAGENTA,
 	GUI_RED
@@ -353,12 +353,12 @@ void TetrisGyro(float y_axis_data)
 {
 	//static float y_pos;
 	//y_pos += y_axis_data/114.285F;
-	if ((y_axis_data/100.0F) > 120.0F)
+	if ((y_axis_data/100.0F) > 200.0F)
 	{
 		y = y_axis_data;
 		y_pos += 1;
 	}
-	if ((y_axis_data/100.0F) - 7 < (-120.0F))
+	if ((y_axis_data/100.0F) < (-200.0F))
 	{	
 		y = y_axis_data;
 		y_pos -= 1;
@@ -403,7 +403,6 @@ void TetrisButton(void)
 //Game function
 void TetrisGame(void)
 {
-	Block_t block;
 	GUI_GotoXY(0,300);
 	GUI_DispString("Ypos: ");
 	GUI_DispFloat(y_pos, 10);

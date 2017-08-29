@@ -3,9 +3,6 @@
 
 void GameThread(void* params)
 {
-	uint8_t x,y;
-	x = 0;
-	y = 0;
 	//Init
 	//GUI_Init();
 	TetrisInit();
