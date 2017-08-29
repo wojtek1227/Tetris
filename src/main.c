@@ -40,6 +40,7 @@ void SystemClock_Config(void) {
 
 int main(void)
 {
+	RNG_BASE;
 	AngularRates_t read;
 	// Initialize the RTOS Kernel.
 	osKernelInitialize();

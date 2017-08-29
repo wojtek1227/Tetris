@@ -4,6 +4,7 @@
 #include "stm32f4xx_hal_rng.h"
 #include "stm32f4xx_hal_rcc.h"
 #include "stm32f429xx.h"
+#include "string.h"
 
 #define BACKGROUND_COLOR GUI_YELLOW
 
@@ -201,7 +202,7 @@ static uint8_t BlockCreate(Block_t* block)
 	HAL_RNG_GenerateRandomNumber(&RNGHandle,&random_type);
 	HAL_RNG_GenerateRandomNumber(&RNGHandle,&random_position);
 	HAL_RNG_GenerateRandomNumber(&RNGHandle,&random_color_num);
-	random_type = (random_type % (NUMBER_OF_BLOCKS-1))+1;
+	random_type = 4;//(random_type % (NUMBER_OF_BLOCKS-1))+1;
 	random_position = (random_position % NUMBER_OF_POSITIONS);
 	random_color_num = (random_color_num % (COLOR_NUMBER-1))+1;
 	block->x = 4;
@@ -251,7 +252,32 @@ static void BlockDelete(Block_t *block)
 	}
 }
 
+static void ClearLine(uint8_t line)
+{
+	for(uint8_t y = line; y > 0; y--)
+	{
+		memcpy(field[y], field[y - 1], FIELD_X_SIZE * 4);
+	}
+	memset(field[0], 0, FIELD_X_SIZE * 4);
+}
 
+static void CheckLine(void)
+{
+	for(uint8_t y = 0; y < FIELD_Y_SIZE; y++)
+	{
+		for(uint8_t x = 0; x < FIELD_X_SIZE; x++)
+		{
+			if(field[y][x] == 0)
+			{
+				break;
+			}
+			if(x == (FIELD_X_SIZE - 1))
+			{
+				ClearLine(y);
+			}
+		}
+	}
+}
 
 
 //Public functions
@@ -263,7 +289,7 @@ void TetrisInit(void)
 	FieldInit();
 	BlockCreate(&current_block);
 	//field[10][10] = GUI_MAGENTA;
-	BlockAdd(&current_block);
+	//BlockAdd(&current_block);
 	GUI_SetBkColor(BACKGROUND_COLOR);
 	UpdateScreen();
 	
@@ -401,7 +427,7 @@ void TetrisButton(void)
 }
 	
 //Game function
-void TetrisGame(void)
+void Test(void)
 {
 	GUI_GotoXY(0,300);
 	GUI_DispString("Ypos: ");
@@ -409,6 +435,48 @@ void TetrisGame(void)
 	GUI_DispString("\nYaxis: ");
 	GUI_DispFloat(y, 10);
 	BlockMove();
-	UpdateScreen();
 	
+	UpdateScreen();
+	CheckLine();
+	UpdateScreen();
 }
+
+void TetrisGame(void)
+{
+	GUI_GotoXY(0,300);
+	GUI_DispString("Ypos: ");
+	GUI_DispFloat(y_pos, 10);
+	GUI_DispString("\nYaxis: ");
+	GUI_DispFloat(y, 10);
+	if (BlockCollision(&current_block))
+	{
+		CheckLine();
+		if(BlockCreate(&current_block))
+		{
+			BlockAdd(&current_block);
+			UpdateScreen();
+			//Game over
+			while(1){};
+		}
+	}
+	else
+	{
+		//TODO Ruch klocka w dól
+		BlockAdd(&current_block);
+		current_block.y++;
+		
+	}
+	UpdateScreen();
+}
+//	GUI_GotoXY(0,300);
+//	GUI_DispString("Ypos: ");
+//	GUI_DispFloat(y_pos, 10);
+//	GUI_DispString("\nYaxis: ");
+//	GUI_DispFloat(y, 10);
+//	BlockMove();
+//	UpdateScreen();
+//	CheckLine();
+//	UpdateScreen();
+//}
+
+
