@@ -2,6 +2,8 @@
 #include "GUI.h"
 #include "cmsis_os2.h"
 #include "stm32f4xx_hal_rng.h"
+#include "stm32f4xx_hal_rcc.h"
+#include "stm32f429xx.h"
 
 #define BACKGROUND_COLOR GUI_BLUE
 
@@ -47,6 +49,8 @@ static const uint32_t colors[COLOR_NUMBER] =
 	GUI_MAGENTA,
 	GUI_RED
 };
+
+static RNG_HandleTypeDef RNGHandle = {(RNG_TypeDef*)RNG_BASE,0,0,0};
 /*
  *Block types:
  * No block
@@ -72,6 +76,13 @@ static const uint32_t colors[COLOR_NUMBER] =
  * 0010
  * 0010, gives us 0x4444
  */
+ 
+void HAL_RNG_MspInit(RNG_HandleTypeDef *hrng)
+{
+	__HAL_RCC_RNG_CLK_ENABLE();
+}
+
+
 static const uint16_t block_type[NUMBER_OF_BLOCKS][NUMBER_OF_POSITIONS] = 
 {
 	{0, 0, 0, 0}, // No block
@@ -182,13 +193,20 @@ static uint8_t BlockCollision(const Block_t* block)
 
 static uint8_t BlockCreate(Block_t* block)
 {
-	uint32_t random = 2;
-	//ADD rng hal
+	uint32_t random_type;
+	uint32_t random_position;
+	uint32_t random_color_num;
+	HAL_RNG_GenerateRandomNumber(&RNGHandle,&random_type);
+	HAL_RNG_GenerateRandomNumber(&RNGHandle,&random_position);
+	HAL_RNG_GenerateRandomNumber(&RNGHandle,&random_color_num);
+	random_type = (random_type % (NUMBER_OF_BLOCKS-1))+1;
+	random_position = (random_position % NUMBER_OF_POSITIONS);
+	random_color_num = (random_color_num % (COLOR_NUMBER-1))+1;
 	block->x = 4;
 	block->y = 0;
-	block->type = 7;
-	block->position = 2;
-	block->color_num = 4;
+	block->type = random_type;
+	block->position = random_position;
+	block->color_num = random_color_num;
 	//Collision detection
 	return BlockCollision(block);
 }
@@ -237,7 +255,8 @@ static void BlockDelete(Block_t *block)
 //Public functions
 void TetrisInit(void)
 {
-	
+	HAL_RNG_MspInit(&RNGHandle);
+	HAL_RNG_Init(&RNGHandle);
 	GUI_Init();
 	FieldInit();
 	BlockCreate(&current_block);
