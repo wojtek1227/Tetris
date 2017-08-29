@@ -1,7 +1,7 @@
 #include "tetris.h"
 #include "GUI.h"
 #include "cmsis_os2.h"
-
+#include "stm32f4xx_hal_rng.h"
 
 #define BACKGROUND_COLOR GUI_BLUE
 
@@ -9,7 +9,7 @@
 #define NUMBER_OF_POSITIONS 4
 
 #define FIELD_X_SIZE 12
-#define FIELD_Y_SIZE 12
+#define FIELD_Y_SIZE 15
 
 #define SQUARE_SIZE 20
 #define SQUARE_FRAME 1
@@ -157,14 +157,15 @@ static void UpdateScreen(void)
 	}
 }
 
-static uint8_t CollisionDetection(const Block_t* block)
+static uint8_t BlockCollision(const Block_t* block)
 {
 	uint16_t tmp = 0x8000;
+	
 	for(uint8_t i = 0; i < 4; i++)
 	{
 		for(uint8_t j = 0; j < 4; j++)
 		{
-			if ((block_type[block->type][block->position] & tmp) && (field[block->y + i][block->x + i] != 0))
+			if ((block_type[block->type][block->position] & tmp) && (field[block->y + i][block->x + j] != 0))
 			{
 				return 1;
 			}
@@ -184,7 +185,7 @@ static uint8_t BlockCreate(Block_t* block)
 	block->position = 2;
 	block->color_num = 4;
 	//Collision detection
-	return CollisionDetection(block);
+	return BlockCollision(block);
 }
 
 static void BlockAdd(const Block_t* block)
@@ -225,25 +226,13 @@ static void BlockDelete(Block_t *block)
 	}
 }
 
-static uint8_t BlockCollision(const Block_t* block)
-{
-	uint16_t tmp = 0x8000;
-	
-	for(uint8_t i = 0; i < 4; i++)
-	{
-		for(uint8_t j = 0; j < 4; j++)
-		{
-			if ((block_type[block->type][block->position] & tmp) && (field[block->y + i][block->x + j] != 0))
-			{
-				return 1;
-			}
-		}
-	}
-	return 0;
-}
+
+
+
 //Public functions
 void TetrisInit(void)
 {
+	
 	GUI_Init();
 	FieldInit();
 	BlockCreate(&current_block);
@@ -293,7 +282,7 @@ static void BlockMove()
 			BlockCreate(&current_block);
 		}
 		BlockAdd(&current_block);
-		if (current_block.y == 9)
+		if (current_block.y == 12)
 		{
 			BlockCreate(&current_block);
 			BlockAdd(&current_block);
