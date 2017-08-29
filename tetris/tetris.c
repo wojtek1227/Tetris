@@ -25,6 +25,8 @@
 
 #define FALL_TIME 5
 
+#define X_MOVE_WAIT 3
+
 //Types
 typedef struct
 {
@@ -102,7 +104,7 @@ Block_t current_block;
 int16_t y_pos;
 float y;
 static int16_t fall_time = 0;
-
+static uint8_t move_time = 0;
 //Private functions
 
 static void FieldInit(void)
@@ -275,25 +277,33 @@ static void BlockMove()
 		//TODO dodac sprawdzanie x jak w else if
 		// trzeba uwzglednic ze moga byc 2 rózne górne limity x, bo mamy klocki dlugie na 3 badz na 4
 		// w zwiazku z tym proponuje limit dopasowac do klocków dlugich na 3 i dodatkowo przed dodaniem sprawdzac kolizje, jesli wystepuje to cofnac zmiane x
-		BlockDelete(&current_block);
-		current_block.x < FIELD_X_SIZE-1 ? current_block.x++ : current_block.x;
-		if (BlockCollision(&current_block))
+		if (move_time == 0)
 		{
-			current_block.x--;
+			BlockDelete(&current_block);
+			current_block.x < FIELD_X_SIZE-1 ? current_block.x++ : current_block.x;
+			if (BlockCollision(&current_block))
+			{
+				current_block.x--;
+			}
+			move_time = 1;
 		}
 		BlockAdd(&current_block);
 		//y_pos = 5; // zerowanie jest slabe bo jak za bardzo przechylimy to mamy zero podczas trzymania plytki pod skosem
 	}
 	else if(y_pos < -(MOVE_BLOCK_VALUE))
 	{
-		BlockDelete(&current_block);
-		current_block.x > 0 ? current_block.x-- : current_block.x; 
-		if (BlockCollision(&current_block))
+		if (move_time == 0)
 		{
-			current_block.x++;
+			BlockDelete(&current_block);
+			current_block.x > 0 ? current_block.x-- : current_block.x; 
+			if (BlockCollision(&current_block))
+			{
+				current_block.x++;
+			}
+			BlockAdd(&current_block);	
+			move_time = 1;
+			//y_pos = -5;
 		}
-		BlockAdd(&current_block);		
-		//y_pos = -5;
 	}
 	if (fall_time == FALL_TIME)
 	{
@@ -317,7 +327,14 @@ static void BlockMove()
 	{
 		fall_time++;
 	}
-	
+	if (move_time == X_MOVE_WAIT)
+	{
+		move_time = 0;
+	}
+	else if (move_time != 0)
+	{
+		move_time++;
+	}
 	
 	//TODO
 	// trzeba dodac albo delay'a (fuj !), albo timer, który po 0.5 sekundy np. dopiero wyzeruje poziom.
@@ -336,12 +353,12 @@ void TetrisGyro(float y_axis_data)
 {
 	//static float y_pos;
 	//y_pos += y_axis_data/114.285F;
-	if ((y_axis_data/100.0F) > 100.0F)
+	if ((y_axis_data/100.0F) > 120.0F)
 	{
 		y = y_axis_data;
 		y_pos += 1;
 	}
-	if ((y_axis_data/100.0F) - 7 < (-100.0F))
+	if ((y_axis_data/100.0F) - 7 < (-120.0F))
 	{	
 		y = y_axis_data;
 		y_pos -= 1;
@@ -350,7 +367,7 @@ void TetrisGyro(float y_axis_data)
 	{
 		y_pos = 0;
 	}
-	BlockMove();
+
 
 //	GUI_GotoXY(0, 300);
 //	GUI_DispString("Y_pos: ");
@@ -392,5 +409,7 @@ void TetrisGame(void)
 	GUI_DispFloat(y_pos, 10);
 	GUI_DispString("\nYaxis: ");
 	GUI_DispFloat(y, 10);
+	BlockMove();
 	UpdateScreen();
+	
 }
