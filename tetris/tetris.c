@@ -84,7 +84,7 @@ static const uint16_t block_type[NUMBER_OF_BLOCKS][NUMBER_OF_POSITIONS] =
 
 
 //Global variables
-static uint16_t field[FIELD_Y_SIZE][FIELD_X_SIZE] = {{0}};
+static uint32_t field[FIELD_Y_SIZE][FIELD_X_SIZE] = {{0}};
 Block_t current_block;
 int16_t y_pos;
 float y;
