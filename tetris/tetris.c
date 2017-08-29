@@ -10,6 +10,8 @@
 
 #define FIELD_X_SIZE 12
 #define FIELD_Y_SIZE 15
+#define FIELD_X_FULL_SIZE 13
+#define FIELD_Y_FULL_SIZE 16
 
 #define SQUARE_SIZE 20
 #define SQUARE_FRAME 1
@@ -84,7 +86,7 @@ static const uint16_t block_type[NUMBER_OF_BLOCKS][NUMBER_OF_POSITIONS] =
 
 
 //Global variables
-static uint32_t field[FIELD_Y_SIZE][FIELD_X_SIZE] = {{0}};
+static uint32_t field[FIELD_Y_FULL_SIZE][FIELD_X_FULL_SIZE] = {{0}};
 Block_t current_block;
 int16_t y_pos;
 float y;
@@ -94,12 +96,15 @@ static int16_t fall_time = 0;
 
 static void FieldInit(void)
 {
-	for(uint8_t y = 0; y < FIELD_Y_SIZE; y++)
+	for(uint8_t y = 0; y < FIELD_Y_FULL_SIZE; y++)
 	{
-		for(uint8_t x = 0; x < FIELD_X_SIZE; x++)
+		
+		for(uint8_t x = 0; x < FIELD_X_FULL_SIZE; x++)
 		{
 			field[y][x] = 0;
+			field[FIELD_Y_SIZE][x] = 0x01;
 		}
+		field[y][FIELD_X_SIZE] = 0x01;
 	}
 }
 /*
