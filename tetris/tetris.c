@@ -338,8 +338,9 @@ static void ClearLine(uint8_t line)
 	memset(field[0], 0, FIELD_X_SIZE * 4);
 }
 
-static void CheckLine(void)
+static uint8_t CheckLine(void)
 {
+	uint8_t cleared_lines = 0;
 	for(uint8_t y = 0; y < FIELD_Y_SIZE; y++)
 	{
 		for(uint8_t x = 0; x < FIELD_X_SIZE; x++)
@@ -351,9 +352,11 @@ static void CheckLine(void)
 			if(x == (FIELD_X_SIZE - 1))
 			{
 				ClearLine(y);
+				cleared_lines++;
 			}
 		}
 	}
+	return cleared_lines;
 }
 
 
@@ -421,11 +424,12 @@ void TetrisButton(void)
 //Game function
 void TetrisGame(void)
 {
+	static uint8_t score;
 	GUI_GotoXY(0,300);
 	GUI_DispString("Ypos: ");
 	GUI_DispFloat(y_pos, 10);
-	GUI_DispString("\nYaxis: ");
-	GUI_DispFloat(y, 10);
+	GUI_DispString("\nScore: ");
+	GUI_DispDec(score, 3);
 	
 	BlockDelete(&current_block);
 	if(fall_time == 0)
@@ -439,7 +443,7 @@ void TetrisGame(void)
 	{
 		current_block.y--;
 		BlockAdd(&current_block);
-		CheckLine();
+		score += CheckLine();
 		if(BlockCreate(&current_block))
 		{
 			BlockAdd(&current_block);
