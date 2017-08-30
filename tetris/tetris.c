@@ -202,9 +202,9 @@ static uint8_t BlockCreate(Block_t* block)
 	HAL_RNG_GenerateRandomNumber(&RNGHandle,&random_type);
 	HAL_RNG_GenerateRandomNumber(&RNGHandle,&random_position);
 	HAL_RNG_GenerateRandomNumber(&RNGHandle,&random_color_num);
-	random_type = 4;//(random_type % (NUMBER_OF_BLOCKS-1))+1;
+	random_type = (random_type % (NUMBER_OF_BLOCKS - 1)) + 1;
 	random_position = (random_position % NUMBER_OF_POSITIONS);
-	random_color_num = (random_color_num % (COLOR_NUMBER-1))+1;
+	random_color_num = (random_color_num % (COLOR_NUMBER - 1)) + 1;
 	block->x = 4;
 	block->y = 0;
 	block->type = random_type;
@@ -252,6 +252,83 @@ static void BlockDelete(Block_t *block)
 	}
 }
 
+static void BlockMove()
+{
+	if (y_pos > MOVE_BLOCK_VALUE)// zakres <-3,3> sprawdza sie calkiem dobrze, ale to tez kwestia wlasnych preferencji 
+	{
+		//TODO dodac sprawdzanie x jak w else if
+		// trzeba uwzglednic ze moga byc 2 rózne górne limity x, bo mamy klocki dlugie na 3 badz na 4
+		// w zwiazku z tym proponuje limit dopasowac do klocków dlugich na 3 i dodatkowo przed dodaniem sprawdzac kolizje, jesli wystepuje to cofnac zmiane x
+		if (move_time == 0)
+		{
+			BlockDelete(&current_block);
+			current_block.x < FIELD_X_SIZE-1 ? current_block.x++ : current_block.x;
+			if (BlockCollision(&current_block))
+			{
+				current_block.x--;
+			}
+			move_time = 1;
+		}
+		BlockAdd(&current_block);
+		//y_pos = 5; // zerowanie jest slabe bo jak za bardzo przechylimy to mamy zero podczas trzymania plytki pod skosem
+	}
+	else if(y_pos < -(MOVE_BLOCK_VALUE))
+	{
+		if (move_time == 0)
+		{
+			BlockDelete(&current_block);
+			current_block.x > 0 ? current_block.x-- : current_block.x; 
+			if (BlockCollision(&current_block))
+			{
+				current_block.x++;
+			}
+			BlockAdd(&current_block);	
+			move_time = 1;
+			//y_pos = -5;
+		}
+	}
+//	if (fall_time == FALL_TIME)
+//	{
+//		BlockDelete(&current_block);
+//		current_block.y++;
+//		if (BlockCollision(&current_block))
+//		{
+//			current_block.y--;
+//			BlockAdd(&current_block);
+//			BlockCreate(&current_block);
+//		}
+//		BlockAdd(&current_block);
+//		if (current_block.y == 12)
+//		{
+//			BlockCreate(&current_block);
+//			BlockAdd(&current_block);
+//		}
+//		fall_time = 0;
+//	}
+//	else
+//	{
+//		fall_time++;
+//	}
+	if (move_time == X_MOVE_WAIT)
+	{
+		move_time = 0;
+	}
+	else if (move_time != 0)
+	{
+		move_time++;
+	}
+	
+	//TODO
+	// trzeba dodac albo delay'a (fuj !), albo timer, który po 0.5 sekundy np. dopiero wyzeruje poziom.
+	// Zerowanie jest potrzebne, natomiast nie moze byc natychmiast. Ma to dwa plusy:
+	//  1) zachowamy jako taki balans, zwlaszcza przy dobrym okresie po ktorym sie zeruje (zeby gracz akurat odruchowo
+	//     wrocil do poziomu, jaki robi
+	//  2) jesli raz wyzeruje sie w zlym miejscu, to potem kolejne wyzerowanie moze znowu to wyrownac (jak tym razem
+	//     gracz ruszy plytka zgodnie z przewidywaniami
+	
+	
+}
+
 static void ClearLine(uint8_t line)
 {
 	for(uint8_t y = line; y > 0; y--)
@@ -296,84 +373,6 @@ void TetrisInit(void)
 	GUI_Exec();
 }
 
-static void BlockMove()
-{
-	if (y_pos > MOVE_BLOCK_VALUE)// zakres <-3,3> sprawdza sie calkiem dobrze, ale to tez kwestia wlasnych preferencji 
-	{
-		//TODO dodac sprawdzanie x jak w else if
-		// trzeba uwzglednic ze moga byc 2 rózne górne limity x, bo mamy klocki dlugie na 3 badz na 4
-		// w zwiazku z tym proponuje limit dopasowac do klocków dlugich na 3 i dodatkowo przed dodaniem sprawdzac kolizje, jesli wystepuje to cofnac zmiane x
-		if (move_time == 0)
-		{
-			BlockDelete(&current_block);
-			current_block.x < FIELD_X_SIZE-1 ? current_block.x++ : current_block.x;
-			if (BlockCollision(&current_block))
-			{
-				current_block.x--;
-			}
-			move_time = 1;
-		}
-		BlockAdd(&current_block);
-		//y_pos = 5; // zerowanie jest slabe bo jak za bardzo przechylimy to mamy zero podczas trzymania plytki pod skosem
-	}
-	else if(y_pos < -(MOVE_BLOCK_VALUE))
-	{
-		if (move_time == 0)
-		{
-			BlockDelete(&current_block);
-			current_block.x > 0 ? current_block.x-- : current_block.x; 
-			if (BlockCollision(&current_block))
-			{
-				current_block.x++;
-			}
-			BlockAdd(&current_block);	
-			move_time = 1;
-			//y_pos = -5;
-		}
-	}
-	if (fall_time == FALL_TIME)
-	{
-		BlockDelete(&current_block);
-		current_block.y++;
-		if (BlockCollision(&current_block))
-		{
-			current_block.y--;
-			BlockAdd(&current_block);
-			BlockCreate(&current_block);
-		}
-		BlockAdd(&current_block);
-		if (current_block.y == 12)
-		{
-			BlockCreate(&current_block);
-			BlockAdd(&current_block);
-		}
-		fall_time = 0;
-	}
-	else
-	{
-		fall_time++;
-	}
-	if (move_time == X_MOVE_WAIT)
-	{
-		move_time = 0;
-	}
-	else if (move_time != 0)
-	{
-		move_time++;
-	}
-	
-	//TODO
-	// trzeba dodac albo delay'a (fuj !), albo timer, który po 0.5 sekundy np. dopiero wyzeruje poziom.
-	// Zerowanie jest potrzebne, natomiast nie moze byc natychmiast. Ma to dwa plusy:
-	//  1) zachowamy jako taki balans, zwlaszcza przy dobrym okresie po ktorym sie zeruje (zeby gracz akurat odruchowo
-	//     wrocil do poziomu, jaki robi
-	//  2) jesli raz wyzeruje sie w zlym miejscu, to potem kolejne wyzerowanie moze znowu to wyrownac (jak tym razem
-	//     gracz ruszy plytka zgodnie z przewidywaniami
-	
-	
-}
-
-
 //Use gyro data
 void TetrisGyro(float y_axis_data)
 {
@@ -393,25 +392,18 @@ void TetrisGyro(float y_axis_data)
 	{
 		y_pos = 0;
 	}
-
-
-//	GUI_GotoXY(0, 300);
-//	GUI_DispString("Y_pos: ");
-//	GUI_DispFloat(y_pos, 10);
-	//UpdateScreen();	
 }
-
 
 //Rotate if button was pressed
 void TetrisButton(void)
 {
 	BlockDelete(&current_block);
-	if (current_block.position == NUMBER_OF_POSITIONS-1)
+	if (current_block.position == NUMBER_OF_POSITIONS - 1)
 	{
 		current_block.position = 0;
 		if (BlockCollision(&current_block))
 		{
-			current_block.position = NUMBER_OF_POSITIONS-1;
+			current_block.position = NUMBER_OF_POSITIONS - 1;
 		}
 	}
 	else
@@ -427,20 +419,6 @@ void TetrisButton(void)
 }
 	
 //Game function
-void Test(void)
-{
-	GUI_GotoXY(0,300);
-	GUI_DispString("Ypos: ");
-	GUI_DispFloat(y_pos, 10);
-	GUI_DispString("\nYaxis: ");
-	GUI_DispFloat(y, 10);
-	BlockMove();
-	
-	UpdateScreen();
-	CheckLine();
-	UpdateScreen();
-}
-
 void TetrisGame(void)
 {
 	GUI_GotoXY(0,300);
@@ -448,8 +426,19 @@ void TetrisGame(void)
 	GUI_DispFloat(y_pos, 10);
 	GUI_DispString("\nYaxis: ");
 	GUI_DispFloat(y, 10);
+	
+	BlockDelete(&current_block);
+	if(fall_time == 0)
+	{
+		
+		current_block.y++;
+	}
+	fall_time++;
+	fall_time %= FALL_TIME;
 	if (BlockCollision(&current_block))
 	{
+		current_block.y--;
+		BlockAdd(&current_block);
 		CheckLine();
 		if(BlockCreate(&current_block))
 		{
@@ -459,24 +448,10 @@ void TetrisGame(void)
 			while(1){};
 		}
 	}
-	else
-	{
-		//TODO Ruch klocka w dól
-		BlockAdd(&current_block);
-		current_block.y++;
-		
-	}
+	BlockAdd(&current_block);
+	BlockMove();
 	UpdateScreen();
 }
-//	GUI_GotoXY(0,300);
-//	GUI_DispString("Ypos: ");
-//	GUI_DispFloat(y_pos, 10);
-//	GUI_DispString("\nYaxis: ");
-//	GUI_DispFloat(y, 10);
-//	BlockMove();
-//	UpdateScreen();
-//	CheckLine();
-//	UpdateScreen();
-//}
+
 
 
