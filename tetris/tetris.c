@@ -6,10 +6,11 @@
 #include "stm32f429xx.h"
 #include "string.h"
 
-#define BACKGROUND_COLOR GUI_YELLOW
+#define BACKGROUND_COLOR GUI_BLUE
 
 #define NUMBER_OF_BLOCKS 8
 #define NUMBER_OF_POSITIONS 4
+#define COLLISION_DETECTED 1
 
 #define FIELD_X_SIZE 12
 #define FIELD_Y_SIZE 15
@@ -47,9 +48,9 @@ static const uint32_t colors[COLOR_NUMBER] =
 	GUI_CYAN,
 	GUI_GRAY,
 	GUI_ORANGE,
-	GUI_BLUE,
-	GUI_GREEN,
 	GUI_MAGENTA,
+	GUI_GREEN,
+	GUI_YELLOW,
 	GUI_RED
 };
 
@@ -256,9 +257,6 @@ static void BlockMove()
 {
 	if (y_pos > MOVE_BLOCK_VALUE)// zakres <-3,3> sprawdza sie calkiem dobrze, ale to tez kwestia wlasnych preferencji 
 	{
-		//TODO dodac sprawdzanie x jak w else if
-		// trzeba uwzglednic ze moga byc 2 rózne górne limity x, bo mamy klocki dlugie na 3 badz na 4
-		// w zwiazku z tym proponuje limit dopasowac do klocków dlugich na 3 i dodatkowo przed dodaniem sprawdzac kolizje, jesli wystepuje to cofnac zmiane x
 		if (move_time == 0)
 		{
 			BlockDelete(&current_block);
@@ -270,7 +268,6 @@ static void BlockMove()
 			move_time = 1;
 		}
 		BlockAdd(&current_block);
-		//y_pos = 5; // zerowanie jest slabe bo jak za bardzo przechylimy to mamy zero podczas trzymania plytki pod skosem
 	}
 	else if(y_pos < -(MOVE_BLOCK_VALUE))
 	{
@@ -287,28 +284,6 @@ static void BlockMove()
 			//y_pos = -5;
 		}
 	}
-//	if (fall_time == FALL_TIME)
-//	{
-//		BlockDelete(&current_block);
-//		current_block.y++;
-//		if (BlockCollision(&current_block))
-//		{
-//			current_block.y--;
-//			BlockAdd(&current_block);
-//			BlockCreate(&current_block);
-//		}
-//		BlockAdd(&current_block);
-//		if (current_block.y == 12)
-//		{
-//			BlockCreate(&current_block);
-//			BlockAdd(&current_block);
-//		}
-//		fall_time = 0;
-//	}
-//	else
-//	{
-//		fall_time++;
-//	}
 	if (move_time == X_MOVE_WAIT)
 	{
 		move_time = 0;
@@ -317,15 +292,6 @@ static void BlockMove()
 	{
 		move_time++;
 	}
-	
-	//TODO
-	// trzeba dodac albo delay'a (fuj !), albo timer, który po 0.5 sekundy np. dopiero wyzeruje poziom.
-	// Zerowanie jest potrzebne, natomiast nie moze byc natychmiast. Ma to dwa plusy:
-	//  1) zachowamy jako taki balans, zwlaszcza przy dobrym okresie po ktorym sie zeruje (zeby gracz akurat odruchowo
-	//     wrocil do poziomu, jaki robi
-	//  2) jesli raz wyzeruje sie w zlym miejscu, to potem kolejne wyzerowanie moze znowu to wyrownac (jak tym razem
-	//     gracz ruszy plytka zgodnie z przewidywaniami
-	
 	
 }
 
@@ -439,23 +405,31 @@ void TetrisGame(void)
 	}
 	fall_time++;
 	fall_time %= FALL_TIME;
-	if (BlockCollision(&current_block))
+	if (BlockCollision(&current_block) == COLLISION_DETECTED)
 	{
 		current_block.y--;
 		BlockAdd(&current_block);
 		score += CheckLine();
-		if(BlockCreate(&current_block))
+		// if we have a collision after create a new block - it's game over
+		if(BlockCreate(&current_block) == COLLISION_DETECTED)
 		{
 			BlockAdd(&current_block);
 			UpdateScreen();
-			//Game over
-			while(1){};
+			GUI_Exec();
+			while(1)
+			{
+				char score_string[19] = "Your score is: ";					
+				sprintf(&score_string[15], "%d", score);
+				GUI_SetFont(&GUI_FontComic18B_ASCII);
+				GUI_DispStringAt(score_string, 60,140);
+				GUI_DispStringAt("GAME OVER !!!", 65,160);
+				GUI_DispStringAt("Click Reset to restart game !", 20,180);
+			};
 		}
 	}
 	BlockAdd(&current_block);
 	BlockMove();
 	UpdateScreen();
 }
-
 
 
